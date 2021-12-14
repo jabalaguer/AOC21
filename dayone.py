@@ -25,7 +25,7 @@ class SubSonar:
             self.data = depth_reading.read().split("\n")
 
     def greater_depth(self, first_reading: str, second_reading: str) -> bool:
-        return bool(int(second_reading) > int(first_reading))
+        return int(second_reading) > int(first_reading)
 
     def calc_measurement(self, window_size: int = window, start: int = 0) -> int:
         if start <= len(self.data) - window:

@@ -38,7 +38,7 @@ for position, depth in enumerate(s1.data):
     if s1.greater_depth(s1.data[position - 1], depth) and position > 0:
         count += 1
     if s1.calc_measurement(start=position) < s1.calc_measurement(
-        start=position + 1
+        start = position + 1
     ) and position < len(s1.data):
         window_count += 1
 

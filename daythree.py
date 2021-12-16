@@ -94,17 +94,17 @@ class SubDiagnostic:
                 else:
                     opp = "1"
                 newlist = list(filter(lambda i: i[place] == opp, lst))
-                return self.CO2_scrubber(place=place + 1, lst=newlist)
+                return self.co2_scrubber(place=place + 1, lst=newlist)
             elif halfNum < overHalfNum and len(lst) % 2 == 0:
                 newlist = list(filter(lambda i: i[place] == halfNum, lst))
-                return self.CO2_scrubber(place=place + 1, lst=newlist)
+                return self.co2_scrubber(place=place + 1, lst=newlist)
             elif (
                 len(lst) % 2 == 1
                 and halfNum != overHalfNum
                 and overHalfNum == lst[overHalf + 1][place]
             ):
                 newlist = list(filter(lambda i: i[place] == halfNum, lst))
-                return self.CO2_scrubber(place=place + 1, lst=newlist)
+                return self.co2_scrubber(place=place + 1, lst=newlist)
 
 
 d1 = SubDiagnostic(input_file)
@@ -113,5 +113,5 @@ power_consumption = master_reading["gamma"] * master_reading["epsilon"]
 print(f"power consumption: {power_consumption}")
 
 oxy = d1.oxygen_generator(lst=d1.data)
-co2 = d1.CO2_scrubber(lst=d1.data)
+co2 = d1.co2_scrubber(lst=d1.data)
 print(f"life support rating: {oxy * co2}")

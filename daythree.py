@@ -4,12 +4,12 @@
     Part One:
     1) Turn file input into a list of binary strings
     2) Iterate over the list to calc the most common binary number (0 or 1) at each placeholder
-    3) US the most common number to build the gamma binary and the opposite as epsilon binary
+    3) Use the most common number to build the gamma binary and the opposite as the epsilon binary
     4) Convert the binary numbers to decimal integers
     5) Print gamma * epsilon which is power consumption
 
     Part Two:
-    1) create a recursive function to reduce binary string list base on matching
+    1) create a recursive function to reduce [binary string] based on matching
     2) Oxygen and C02 are mirror images in terms of pattern
     3) Multiply the decimal results of Oxygen and CO2 recursions
 """
@@ -80,7 +80,7 @@ class SubDiagnostic:
                 newlist = list(filter(lambda i: i[place] == overHalfNum, lst))
                 return self.oxygen_generator(place=place + 1, lst=newlist)
 
-    def CO2_scrubber(self, place: int = 0, lst: list = []) -> int:
+    def co2_scrubber(self, place: int = 0, lst: list = []) -> int:
         if len(lst) == 1:
             return int(lst[0], 2)
         else:

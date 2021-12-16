@@ -9,7 +9,9 @@
     5) Print gamma * epsilon which is power consumption
 
     Part Two:
-    1) add a window that sums sequential measurements into reading for comparison
+    1) create a recursive function to reduce binary string list base on matching
+    2) Oxygen and C02 are mirror images in terms of pattern
+    3) Multiply the decimal results of Oxygen and CO2 recursions
 """
 
 from sys import argv
@@ -17,7 +19,7 @@ from sys import argv
 script, input_file = argv
 
 
-class PowerDiagnostic:
+class SubDiagnostic:
     def __init__(self, input_file):
         with open(input_file) as depth_reading:
             self.data = depth_reading.read().split("\n")
@@ -56,8 +58,60 @@ class PowerDiagnostic:
         )
         return readings
 
+    def oxygen_generator(self, place: int = 0, lst: list = []) -> int:
+        if len(lst) == 1:
+            return int(lst[0], 2)
+        else:
+            lst.sort()
+            half, overHalf = len(lst) // 2 - 1, len(lst) // 2
+            halfNum = lst[half][place]
+            overHalfNum = lst[overHalf][place]
+            if halfNum == overHalfNum:
+                newlist = list(filter(lambda i: i[place] == halfNum, lst))
+                return self.oxygen_generator(place=place + 1, lst=newlist)
+            elif halfNum < overHalfNum and len(lst) % 2 == 0:
+                newlist = list(filter(lambda i: i[place] == overHalfNum, lst))
+                return self.oxygen_generator(place=place + 1, lst=newlist)
+            elif (
+                len(lst) % 2 == 1
+                and halfNum != overHalfNum
+                and overHalfNum == lst[overHalf + 1][place]
+            ):
+                newlist = list(filter(lambda i: i[place] == overHalfNum, lst))
+                return self.oxygen_generator(place=place + 1, lst=newlist)
 
-d1 = PowerDiagnostic(input_file)
+    def CO2_scrubber(self, place: int = 0, lst: list = []) -> int:
+        if len(lst) == 1:
+            return int(lst[0], 2)
+        else:
+            lst.sort()
+            half, overHalf = len(lst) // 2 - 1, len(lst) // 2
+            halfNum = lst[half][place]
+            overHalfNum = lst[overHalf][place]
+            if halfNum == overHalfNum:
+                if int(halfNum) == 1:
+                    opp = "0"
+                else:
+                    opp = "1"
+                newlist = list(filter(lambda i: i[place] == opp, lst))
+                return self.CO2_scrubber(place=place + 1, lst=newlist)
+            elif halfNum < overHalfNum and len(lst) % 2 == 0:
+                newlist = list(filter(lambda i: i[place] == halfNum, lst))
+                return self.CO2_scrubber(place=place + 1, lst=newlist)
+            elif (
+                len(lst) % 2 == 1
+                and halfNum != overHalfNum
+                and overHalfNum == lst[overHalf + 1][place]
+            ):
+                newlist = list(filter(lambda i: i[place] == halfNum, lst))
+                return self.CO2_scrubber(place=place + 1, lst=newlist)
+
+
+d1 = SubDiagnostic(input_file)
 master_reading = d1.power_readings(d1.build_counts())
 power_consumption = master_reading["gamma"] * master_reading["epsilon"]
-print(f"part one: {power_consumption}")
+print(f"power consumption: {power_consumption}")
+
+oxy = d1.oxygen_generator(lst=d1.data)
+co2 = d1.CO2_scrubber(lst=d1.data)
+print(f"life support rating: {oxy * co2}")

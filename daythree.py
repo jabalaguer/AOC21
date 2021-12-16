@@ -89,7 +89,7 @@ class SubDiagnostic:
             halfNum = lst[half][place]
             overHalfNum = lst[overHalf][place]
             if halfNum == overHalfNum:
-                if int(halfNum) == 1:
+                if halfNum == "1":
                     opp = "0"
                 else:
                     opp = "1"

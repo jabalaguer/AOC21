@@ -14,11 +14,6 @@
     3) Multiply the decimal results of Oxygen and CO2 recursions
 """
 
-from sys import argv
-
-script, input_file = argv
-
-
 class SubDiagnostic:
     def __init__(self, input_file):
         with open(input_file) as depth_reading:
